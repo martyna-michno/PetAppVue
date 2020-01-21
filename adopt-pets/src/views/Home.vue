@@ -1,12 +1,12 @@
 <template>
   <div class="home">
 <h1>Adopt a new best friend.</h1>
-<button class="btn btn-primary">Add New Pet</button>
+<button @click="togglePetForm" class="btn btn-primary">Add New Pet</button>
 <b-form @submit="handleSubmit"  v-if="showPetForm">
       <b-form-group id="input-group-2" label="Pet's Name:" label-for="input-2">
         <b-form-input
           id="input-2"
-          v-model="form.name"
+          v-model="formData.name"
           required
           type="text"
           placeholder="Enter name"
@@ -16,7 +16,7 @@
       <b-form-group id="input-group-3" label="Species:" label-for="input-3">
         <b-form-select
           id="input-3"
-          v-model="form.food"
+          v-model="formData.species"
           :options="['cats', 'dogs']"
           required
         ></b-form-select>
@@ -25,7 +25,7 @@
  <b-form-group id="input-group-2" label="Pet's Age:" label-for="input-2">
         <b-form-input
           id="input-2"
-          v-model="form.name"
+          v-model="formData.age"
           required
           type="number"
           placeholder="Enter age"
@@ -39,7 +39,7 @@
 </template>
 
 <script>
-
+import { mapActions } from 'vuex'
 export default {
   name: 'home',
   data () {
@@ -53,11 +53,22 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'addPet'
+    ]),
     togglePetForm () {
       this.showPetForm = !this.showPetForm
     },
     handleSubmit () {
-
+      const { species, age, name } = this.formData
+      const payload = {
+        species,
+        pet: {
+          age,
+          name
+        }
+      }
+      this.addPet(payload)
     }
   }
 }
