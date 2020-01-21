@@ -1,6 +1,7 @@
 <template>
   <div class="home">
 <h1>Adopt a new best friend.</h1>
+<button class="btn btn-primary">Add New Pet</button>
   </div>
 </template>
 
@@ -8,7 +9,15 @@
 
 export default {
   name: 'home',
-  components: {
+  data () {
+    return {
+      showPetForm: false
+    }
+  },
+  methods: {
+    togglePetForm () {
+      this.showPetForm = !this.showPetForm
+    }
   }
 }
 </script>
